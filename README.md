@@ -49,3 +49,32 @@ the coverage slips below the number in this file.
 
 The Jenkinsfile in the `example` directory will tell Jenkins to use
 bashtestdummy to test your scripts as part of the CI build.
+
+## Other work
+
+Some related work on the internet:
+
+* [assert.sh](https://github.com/lehmannro/assert.sh)
+  Allows asserts on exit codes and stdout, allows mix of failure and
+  success, and creates a (non-standard?) report at the end.
+* [bashunit](https://github.com/djui/bashunit)
+  Ditto.
+* [testdummy](https://github.com/nextrevision/testdummy)
+  Ditto, plus recognizes test_ functions and runs them (and some
+  hierarchical function names that look like BDD style stuff).
+* [a different bashunit--this time, with ASCII art!](https://github.com/athena-oss/bashunit)
+  Allows you to mock functions (but not executables?).  Allows asserts on
+  exit codes and stdout, allows mix of failure and success, and creates a
+  (non-standard?) report at the end.  Some crude function-level code coverage.
+* [bash_unit, with an underscore](https://github.com/pgrange/bash_unit)
+  Is good at showing line number of failure.  Standard assert
+  functions.  Allows mix of failure and success.  Supports
+  [TAP](http://testanything.org/) formatting, setup, teardown, output and
+  return code checking, ...  <- probably the one to build on in the
+  future!
+* [shunit](http://shunit.sourceforge.net/)
+   Doesn't look like it's been updated in ages...
+* [Another shunit](https://github.com/akesterson/shunit)
+  Seems to be related to support some kind of XML output.
+* [shunit2](https://github.com/kward/shunit2)
+  Seems a little on the unmaintained side.
