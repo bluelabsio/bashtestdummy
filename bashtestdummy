@@ -31,7 +31,7 @@ do
   if ! "${test:?}" > "${stdout_log_file}" 2> "${stderr_log_file:?}"
   then
     >&2 echo "${test:?} FAILED!"
-    echo "Please see ${stdout_log_file:?} and /${stderr_log_file:?} for details"
+    echo "Please see ${stdout_log_file:?} and ${stderr_log_file:?} for details"
     exit 1
   fi
   if ! [ -f "${test_expected_stderr:?}" ]
