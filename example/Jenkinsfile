@@ -1,0 +1,7 @@
+def behaviors = baselineBehaviors()
+behaviors.add("jumboQualityContainerBehavior")
+behaviors.add("bashtestdummyBehavior")
+
+blBuild(behaviors) {
+  testImageName = "bashtestdummy-ws-scripts"
+}

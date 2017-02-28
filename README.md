@@ -44,3 +44,8 @@ and '.stderr' files with the same name as your test.
 This framework will log coverage to the
 `metrics/coverage_high_water_mark` file, and will fail the build if
 the coverage slips below the number in this file.
+
+### Jenkinsfile
+
+The Jenkinsfile in the `example` directory will tell Jenkins to use
+bashtestdummy to test your scripts as part of the CI build.
