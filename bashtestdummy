@@ -1,0 +1,58 @@
+#!/bin/bash -e
+
+cd /usr/src/app/tests
+LOGDIR=/usr/src/app/tests/logs
+
+tests=$(find "individual" -name \*.sh -type f | sort)
+>&2 echo "Found the following tests:"
+>&2 echo "${tests}"
+
+export PATH="/usr/src/app/tests/dummies:/usr/src/app/bin:${PATH:?}"
+RUNNUM=$(date +%s)
+for test in ${tests}
+do
+  test_without_extension=${test%.*}
+  test_expected_stdout=${test_without_extension}.stdout
+  test_expected_stderr=${test_without_extension}.stderr
+  #
+  # Create some log filenames
+  #
+  test_simple="${test}"
+  # Remove individual/ from start
+  test_simple=${test_simple//individual\//}
+  # Replace / with _
+  test_simple=${test_simple//\//_}
+  # Replace .sh at end
+  test_simple=${test_simple%.*}
+  stdout_log_file="${LOGDIR:?}/${RUNNUM}.${test_simple}.stdout.log"
+  stderr_log_file="${LOGDIR:?}/${RUNNUM}.${test_simple}.stderr.log"
+
+  >&2 echo "Running test ${test:?}"
+  if ! "${test:?}" > "${stdout_log_file}" 2> "${stderr_log_file:?}"
+  then
+    >&2 echo "${test:?} FAILED!"
+    echo "Please see ${stdout_log_file:?} and ${stderr_log_file:?} for details"
+    echo
+    echo "STDERR:"
+    cat "${stderr_log_file:?}"
+    echo
+    echo "STDOUT:"
+    cat "${stdout_log_file:?}"
+    echo
+    exit 1
+  fi
+  if ! [ -f "${test_expected_stderr:?}" ]
+  then
+    echo "Please examine ${stderr_log_file:?} and create expectations for stderr in ${test_expected_stderr:?}"
+    exit 1
+  fi
+  if ! [ -f "${test_expected_stdout:?}" ]
+  then
+    echo "Please examine ${stdout_log_file:?} and create expectations for stdout in ${test_expected_stdout:?}"
+    exit 1
+  fi
+  echo "${test:?} PASSED!"
+done
+
+echo "PASS"
+echo "Please see logs in ${LOGDIR:?}"
