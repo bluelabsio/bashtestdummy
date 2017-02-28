@@ -58,7 +58,7 @@ end
 HIGH_WATER_MARK_FILE =
   '/usr/src/app/metrics/coverage_high_water_mark'.freeze
 
-task test: [:clean] do
+task :test do
   sh 'kcov --include-path=/usr/src/app/bin /usr/src/app/coverage ' \
      '/usr/bashtestdummy/bashtestdummy'
 
