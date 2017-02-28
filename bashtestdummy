@@ -26,12 +26,19 @@ do
   test_simple=${test_simple%.*}
   stdout_log_file="${LOGDIR:?}/${RUNNUM}.${test_simple}.stdout.log"
   stderr_log_file="${LOGDIR:?}/${RUNNUM}.${test_simple}.stderr.log"
-  
+
   >&2 echo "Running test ${test:?}"
   if ! "${test:?}" > "${stdout_log_file}" 2> "${stderr_log_file:?}"
   then
     >&2 echo "${test:?} FAILED!"
     echo "Please see ${stdout_log_file:?} and ${stderr_log_file:?} for details"
+    echo
+    echo "STDERR:"
+    cat "${stderr_log_file:?}"
+    echo
+    echo "STDOUT:"
+    cat "${stdout_log_file:?}"
+    echo
     exit 1
   fi
   if ! [ -f "${test_expected_stderr:?}" ]
@@ -49,4 +56,3 @@ done
 
 echo "PASS"
 echo "Please see logs in ${LOGDIR:?}"
-
