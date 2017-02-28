@@ -75,30 +75,19 @@ task test: [:clean] do
   uncovered = uncovered_scripts_in_bin_dir
   puts "Uncovered scripts: #{uncovered}" unless uncovered.empty?
   if new_coverage_rounded < high_water_mark
-    raise "Coverage used to be #{high_water_mark}; down to " \
+    puts "Coverage used to be #{high_water_mark}; down to " \
           "#{new_coverage_rounded}% " \
           "(#{code_coverage_lines_from_json}/" \
           "#{total_script_lines_from_bin_dir}).  "\
-          "Fix by viewing 'cover/index.html'"
+          "Fix by viewing 'coverage/index.html'"
+    exit(1)
   elsif new_coverage_rounded > high_water_mark
     IO.write(HIGH_WATER_MARK_FILE, new_coverage_rounded_str)
     puts("Just ratcheted coverage up to #{new_coverage_rounded_str}%"\
          " in #{HIGH_WATER_MARK_FILE}")
+    puts('Please commit the ratchet, push and try again')
+    exit(2)
   else
     puts "Code coverage steady at #{new_coverage_rounded}%"
   end
 end
-
-task :clean do
-  File.delete('.coverage') if File.exist?('.coverage')
-end
-
-task :quality do
-  sh './quality.sh'
-end
-
-task ci: [:test, :quality]
-
-task localtest: [:test, :quality]
-
-task default: :localtest
