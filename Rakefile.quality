@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+require 'quality/rake/task'
+
+Quality::Rake::Task.new do |t|
+  # vendor file
+  t.exclude_files = [
+  ].freeze
+  # t.verbose = true
+end
+
