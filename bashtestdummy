@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 cd /usr/src/app/tests
-LOGDIR=/usr/src/app/tests/logs
+LOGDIR=logs
 
 tests=$(find "individual" -name \*.sh -type f | sort)
 >&2 echo "Found the following tests:"
