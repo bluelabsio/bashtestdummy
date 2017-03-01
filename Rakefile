@@ -3,7 +3,7 @@ require 'json'
 require 'find'
 
 def coverage_data
-  coverage_file_name = '/usr/src/app/coverage/bashtestdummy/coverage.json'
+  coverage_file_name = '/usr/src/app/coverage/kcov-merged/coverage.json'
   coverage_json = File.read(coverage_file_name)
   JSON.parse(coverage_json)
 end
@@ -59,9 +59,13 @@ HIGH_WATER_MARK_FILE =
   '/usr/src/app/metrics/coverage_high_water_mark'.freeze
 
 task :test do
-  sh 'kcov --include-path=/usr/src/app/bin /usr/src/app/coverage ' \
+  sh 'kcov ' +
+     # The default method (PS4) dumps some remnents of multi-line bash
+     # variables out to the console at the end accidentally.
+     '--bash-method=DEBUG ' \
+     '--include-path=/usr/src/app/bin ' \
+     '/usr/src/app/coverage ' \
      '/usr/bashtestdummy/bashtestdummy'
-
   new_coverage = code_coverage_from_json.to_f * 100
 
   unless File.exist? HIGH_WATER_MARK_FILE

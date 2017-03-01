@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 cd /usr/src/app/tests
-LOGDIR=/usr/src/app/tests/logs
+LOGDIR=logs
 
 tests=$(find "individual" -name \*.sh -type f | sort)
 >&2 echo "Found the following tests:"
@@ -31,14 +31,14 @@ do
   if ! "${test:?}" > "${stdout_log_file}" 2> "${stderr_log_file:?}"
   then
     >&2 echo "${test:?} FAILED!"
-    echo "Please see ${stdout_log_file:?} and ${stderr_log_file:?} for details"
-    echo
-    echo "STDERR:"
-    cat "${stderr_log_file:?}"
-    echo
-    echo "STDOUT:"
-    cat "${stdout_log_file:?}"
-    echo
+    >&2 echo "Please see ${stdout_log_file:?} and ${stderr_log_file:?} for details"
+    >&2 echo
+    >&2 echo "STDERR:"
+    >&2 cat "${stderr_log_file:?}"
+    >&2 echo
+    >&2 echo "STDOUT:"
+    >&2 cat "${stdout_log_file:?}"
+    >&2 echo
     exit 1
   fi
   if ! [ -f "${test_expected_stderr:?}" ]
@@ -49,6 +49,18 @@ do
   if ! [ -f "${test_expected_stdout:?}" ]
   then
     echo "Please examine ${stdout_log_file:?} and create expectations for stdout in ${test_expected_stdout:?}"
+    exit 1
+  fi
+  if ! diff --brief "${test_expected_stderr:?}" "${stderr_log_file:?}" >/dev/null
+  then
+    >&2 diff -u "${test_expected_stderr:?}" "${stderr_log_file:?}"
+    >&2 echo "Saw unexpected differences in stderr output from expected output in ${test_expected_stderr:?}"
+    exit 1
+  fi
+  if ! diff --brief "${test_expected_stdout:?}" "${stdout_log_file:?}" >/dev/null
+  then
+    >&2 diff -u "${test_expected_stdout:?}" "${stdout_log_file:?}"
+    >&2 echo "Saw unexpected differences in stdout output from expected output in ${test_expected_stdout:?}"
     exit 1
   fi
   echo "${test:?} PASSED!"
