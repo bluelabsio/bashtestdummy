@@ -51,6 +51,18 @@ do
     echo "Please examine ${stdout_log_file:?} and create expectations for stdout in ${test_expected_stdout:?}"
     exit 1
   fi
+  if ! diff --brief "${test_expected_stderr:?}" "${stderr_log_file:?}" >/dev/null
+  then
+    >&2 diff "${test_expected_stderr:?}" "${stderr_log_file:?}"
+    >&2 echo "Saw unexpected differences in stderr output!"
+    exit 1
+  fi
+  if ! diff --brief "${test_expected_stdout:?}" "${stdout_log_file:?}" >/dev/null
+  then
+    >&2 diff "${test_expected_stdout:?}" "${stdout_log_file:?}"
+    >&2 echo "Saw unexpected differences in stdout output!"
+    exit 1
+  fi
   echo "${test:?} PASSED!"
 done
 
