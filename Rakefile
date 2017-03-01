@@ -66,7 +66,6 @@ task :test do
      '--include-path=/usr/src/app/bin ' \
      '/usr/src/app/coverage ' \
      '/usr/bashtestdummy/bashtestdummy'
-  STDOUT.flush
   new_coverage = code_coverage_from_json.to_f * 100
 
   unless File.exist? HIGH_WATER_MARK_FILE
