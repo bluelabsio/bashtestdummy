@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 require 'json'
 require 'find'
+require 'fileutils'
+
+COVERAGE_FILE_NAME = '/usr/src/app/coverage/bashtestdummy/coverage.json'.freeze
 
 def coverage_data
-  coverage_file_name = '/usr/src/app/coverage/bashtestdummy/coverage.json'
-  coverage_json = File.read(coverage_file_name)
+  coverage_json = File.read(COVERAGE_FILE_NAME)
   JSON.parse(coverage_json)
 end
 
@@ -58,7 +60,11 @@ end
 HIGH_WATER_MARK_FILE =
   '/usr/src/app/metrics/coverage_high_water_mark'.freeze
 
-task :test do
+task :clean_coverage do
+  FileUtils.remove_dir('coverage') if Dir.exist? 'coverage'
+end
+
+task test: [:clean_coverage] do
   sh 'kcov ' +
      # The default method (PS4) dumps some remnents of multi-line bash
      # variables out to the console at the end accidentally.
