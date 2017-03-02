@@ -3,7 +3,7 @@ require 'json'
 require 'find'
 
 def coverage_data
-  coverage_file_name = '/usr/src/app/coverage/kcov-merged/coverage.json'
+  coverage_file_name = '/usr/src/app/coverage/bashtestdummy/coverage.json'
   coverage_json = File.read(coverage_file_name)
   JSON.parse(coverage_json)
 end
