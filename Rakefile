@@ -68,7 +68,11 @@ task test: [:clean_coverage] do
   sh 'kcov ' +
      # The default method (PS4) dumps some remnents of multi-line bash
      # variables out to the console at the end accidentally.
-     '--bash-method=DEBUG ' \
+     #
+     # Unfortunately, DEBUG results in no coverage being written out at all!
+     # '--bash-method=DEBUG ' \
+     #
+     # ...so I guess we live with the multiline garbage.
      '--include-path=/usr/src/app/bin ' \
      '/usr/src/app/coverage ' \
      '/usr/bashtestdummy/bashtestdummy'
