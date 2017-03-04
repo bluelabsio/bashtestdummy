@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 
+#
 # Pull in kcov for shell script test coverage.
 #
 # Scripts taken from https://github.com/Ragnaroek/kcov_docker/blob/master/Dockerfile
@@ -33,13 +34,10 @@ RUN cd $SRC_DIR && \
 
 
 #
-                                
-
-#
 # Copy in Rakefile for ratcheting
 #
 
-RUN apt-get update -y && apt-get install -y kcov ruby
+RUN apt-get update -y && apt-get install -y ruby
 
 RUN mkdir -p /usr/bashtestdummy
 COPY . /usr/bashtestdummy
