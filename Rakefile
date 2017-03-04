@@ -73,8 +73,7 @@ task test: [:clean_coverage] do
      # '--bash-method=DEBUG ' \
      #
      # ...so I guess we live with the multiline garbage.
-     '--include-path=/usr/src/app/bin ' \
-     '--include-path=/usr/src/app/lib ' \
+     '--include-path=/usr/src/app/bin,/usr/src/app/lib ' \
      '/usr/src/app/coverage ' \
      '/usr/bashtestdummy/bashtestdummy'
   new_coverage = code_coverage_from_json.to_f * 100
