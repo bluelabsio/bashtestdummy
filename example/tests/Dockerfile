@@ -1,5 +1,4 @@
-# TODO: Update back to latest
-FROM docker.int.bluelabs.io/bluelabs/bashtestdummy:initial
+FROM docker.int.bluelabs.io/bluelabs/bashtestdummy:latest
 
 #
 # Build cowsay
