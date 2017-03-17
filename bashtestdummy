@@ -68,3 +68,6 @@ done
 
 echo "PASS"
 echo "Please see logs in ${LOGDIR:?}"
+echo "Sleeping to flush out logs via ptty..."
+sleep 2
+echo "Done!"
