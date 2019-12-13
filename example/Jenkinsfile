@@ -1,7 +1,0 @@
-def behaviors = baselineBehaviors()
-behaviors.add("jumboQualityContainerBehavior")
-behaviors.add("bashtestDummyBehavior")
-
-blBuild(behaviors) {
-  testImageName = "bashtestdummy-example"
-}
