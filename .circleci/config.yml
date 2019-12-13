@@ -12,10 +12,10 @@ jobs:
           command: |
             set -ex -o pipefail
 
-            # This is just to test the current git state - it does not
-            # get pushed to hub.docker.com.  The actual official
-            # builds are set up as an autobuild on hub.docker.com so
-            # it gets signed and tied to an exact git SHA.
+            # This is just to test the current code in GitHub - it does
+            # not get pushed to hub.docker.com.  The actual official
+            # builds are set up as an auto-build on hub.docker.com so
+            # it gets signed and tied to an exact GitHub SHA.
             docker build -t bluelabsio/bashtestdummy:latest .
             cd example
             ./test.sh
