@@ -4,6 +4,8 @@ quality_gem_version: &quality_gem_version shellcheck-35
 
 jobs:
   run_example:
+    docker:
+      - image: circleci/python:latest
     steps:
       - checkout
       - setup_remote_docker
