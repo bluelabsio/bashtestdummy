@@ -22,7 +22,9 @@ jobs:
             # builds are set up as an auto-build on hub.docker.com so
             # it gets signed and tied to an exact GitHub SHA.
             docker build -t bluelabsio/bashtestdummy:latest .
+
             cd example
+            scp -r $(pwd)/tests remote-docker:$(pwd)/tests
             ./test.sh
       - store_artifacts:
           path: example/coverage
