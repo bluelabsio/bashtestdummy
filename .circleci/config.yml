@@ -24,7 +24,7 @@ jobs:
             docker build -t bluelabsio/bashtestdummy:latest .
 
             cd example
-            scp -r $(pwd)/tests remote-docker:$(pwd)/tests
+            scp -r $(pwd)/tests remote-docker:$(pwd)/
             ./test.sh
       - store_artifacts:
           path: example/coverage
