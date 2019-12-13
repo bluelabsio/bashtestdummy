@@ -1,4 +1,4 @@
-FROM docker.int.bluelabs.io/bluelabs/bashtestdummy:latest
+FROM bluelabsio/bashtestdummy:latest
 
 #
 # Build cowsay
