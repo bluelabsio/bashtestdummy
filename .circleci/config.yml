@@ -2,6 +2,9 @@ version: 2.1
 
 quality_gem_version: &quality_gem_version shellcheck-35
 
+orbs:
+  quality: bluelabs/quality@0.0.2
+
 jobs:
   run_example:
     docker:
