@@ -51,4 +51,8 @@ WORKDIR /usr/src/app
 
 VOLUME /usr/src/app
 
+RUN groupadd -r bashtestdummy && useradd --create-home --system --gid bashtestdummy bashtestdummy
+
+USER bashtestdummy
+
 ENTRYPOINT ["/usr/bin/rake", "-f", "/usr/bashtestdummy/Rakefile", "test"]
