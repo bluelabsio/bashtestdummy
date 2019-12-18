@@ -26,6 +26,7 @@ jobs:
             cd example
             ssh remote-docker mkdir -p $(pwd)/example
             scp -r $(pwd)/tests remote-docker:$(pwd)/
+            ssh remote-docker chmod -R o+rw $(pwd)
             ./test.sh
       - store_artifacts:
           path: example/coverage
