@@ -24,6 +24,7 @@ jobs:
             docker build -t bluelabsio/bashtestdummy:latest .
 
             cd example
+            ssh remote-docker mkdir -p $(pwd)/example
             scp -r $(pwd)/tests remote-docker:$(pwd)/
             ./test.sh
       - store_artifacts:
