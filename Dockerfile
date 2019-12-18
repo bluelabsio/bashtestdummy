@@ -1,12 +1,10 @@
-FROM ubuntu:latest
+FROM ubuntu:bionic
 
 #
 # Pull in kcov for shell script test coverage.
 #
 # Scripts taken from https://github.com/Ragnaroek/kcov_docker/blob/master/Dockerfile
 #
-
-ARG KCOV_GIT_REF
 
 RUN apt-get update
 # install pkg-config deliberately separate since it sometimes fails :( If it eventually
@@ -17,6 +15,8 @@ RUN apt-get install -y zlib1g wget libcurl4-openssl-dev libelf-dev libdw-dev cma
 
 ENV SRC_DIR=/home/kcov-src \
     URL_GIT_KCOV=https://github.com/SimonKagstrom/kcov.git
+
+ARG KCOV_GIT_REF=v37
 
 RUN git clone $URL_GIT_KCOV $SRC_DIR; \
     cd $SRC_DIR; \
@@ -50,5 +50,9 @@ RUN mkdir -p /usr/src/app/tests
 WORKDIR /usr/src/app
 
 VOLUME /usr/src/app
+
+RUN groupadd -r bashtestdummy && useradd --create-home --system --gid bashtestdummy bashtestdummy
+
+USER bashtestdummy
 
 ENTRYPOINT ["/usr/bin/rake", "-f", "/usr/bashtestdummy/Rakefile", "test"]

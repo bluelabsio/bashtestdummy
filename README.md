@@ -78,3 +78,5 @@ Some related work on the internet:
   Seems to be related to support some kind of XML output.
 * [shunit2](https://github.com/kward/shunit2)
   Seems a little on the unmaintained side.
+* [shellspec](https://github.com/shellspec/shellspec) - BDD-style
+  testing framework
