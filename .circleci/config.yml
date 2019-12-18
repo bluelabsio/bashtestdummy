@@ -1,0 +1,42 @@
+version: 2.1
+
+quality_gem_version: &quality_gem_version shellcheck-35
+
+orbs:
+  quality: bluelabs/quality@0.0.2
+
+jobs:
+  run_example:
+    docker:
+      - image: circleci/python:latest
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Run example
+          command: |
+            set -ex -o pipefail
+
+            # This is just to test the current code in GitHub - it does
+            # not get pushed to hub.docker.com.  The actual official
+            # builds are set up as an auto-build on hub.docker.com so
+            # it gets signed and tied to an exact GitHub SHA.
+            docker build -t bluelabsio/bashtestdummy:latest .
+
+            cd example
+            ssh remote-docker mkdir -p $(pwd)/example
+            scp -r tests bin metrics remote-docker:$(pwd)/
+            ssh remote-docker chmod -R o+rw $(pwd)
+            ./test.sh
+      - store_artifacts:
+          path: example/coverage
+workflows:
+  version: 2
+  quality:
+    jobs:
+      - quality/check-quality-job:
+          custom_rakefile: Rakefile.quality
+          image_tag: *quality_gem_version
+  run_example:
+    jobs:
+      - run_example

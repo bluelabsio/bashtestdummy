@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'json'
 require 'find'
 require 'fileutils'
 
-COVERAGE_FILE_NAME = '/usr/src/app/coverage/bashtestdummy/coverage.json'.freeze
+COVERAGE_FILE_NAME = '/usr/src/app/coverage/bashtestdummy/coverage.json'
 
 def coverage_data
   coverage_json = File.read(COVERAGE_FILE_NAME)
@@ -58,7 +59,7 @@ def code_coverage_from_json
 end
 
 HIGH_WATER_MARK_FILE =
-  '/usr/src/app/metrics/coverage_high_water_mark'.freeze
+  '/usr/src/app/metrics/coverage_high_water_mark'
 
 task :clean_coverage do
   FileUtils.remove_dir('coverage') if Dir.exist? 'coverage'
