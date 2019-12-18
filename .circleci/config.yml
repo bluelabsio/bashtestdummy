@@ -25,7 +25,7 @@ jobs:
 
             cd example
             ssh remote-docker mkdir -p $(pwd)/example
-            scp -r tests bin coverage metrics remote-docker:$(pwd)/
+            scp -r tests bin metrics remote-docker:$(pwd)/
             ssh remote-docker chmod -R o+rw $(pwd)
             ./test.sh
       - store_artifacts:
